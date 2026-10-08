@@ -15,9 +15,11 @@ import { PaymentHistoryModal } from '@/components/PaymentHistoryModal';
 import { AddDebtModal } from '@/components/AddDebtModal';
 import { FinancialHealth } from '@/components/FinancialHealth';
 import { CalendarView } from '@/components/CalendarView';
+import { LoginScreen } from '@/components/LoginScreen';
 import { Search, Filter, CreditCard, Landmark, CheckCircle, AlertCircle, RefreshCw } from 'lucide-react';
 
 export default function HomePage() {
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [currentDate, setCurrentDate] = useState<string>(DEFAULT_APP_DATE);
   const [currentTab, setCurrentTab] = useState<TabType>('dashboard');
   const [debts, setDebts] = useState<Debt[]>([]);
@@ -37,8 +39,13 @@ export default function HomePage() {
 
   const [isAddDebtModalOpen, setIsAddDebtModalOpen] = useState<boolean>(false);
 
-  // Veri yükleme
+  // Veri yükleme & Oturum kontrolü
   useEffect(() => {
+    const auth = localStorage.getItem('borc_takip_auth_token') || sessionStorage.getItem('borc_takip_auth_token');
+    if (auth === 'session_active_mustafa') {
+      setIsAuthenticated(true);
+    }
+
     const loadedDebts = StorageService.getDebts();
     const loadedPayments = StorageService.getPayments();
     const settings = StorageService.getSettings();
@@ -50,6 +57,12 @@ export default function HomePage() {
     }
     setIsLoaded(true);
   }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('borc_takip_auth_token');
+    sessionStorage.removeItem('borc_takip_auth_token');
+    setIsAuthenticated(false);
+  };
 
   // Tarih değiştiğinde kaydet
   const handleDateChange = (newDate: string) => {
@@ -148,6 +161,11 @@ export default function HomePage() {
     );
   }
 
+  // Giriş Ekranı Koruması (Kullanıcı: mustafa | Şifre: 147258)
+  if (!isAuthenticated) {
+    return <LoginScreen onSuccess={() => setIsAuthenticated(true)} />;
+  }
+
   return (
     <div className="min-h-screen flex flex-col bg-[#090d16] text-slate-100">
       {/* Üst Menü / Header */}
@@ -156,6 +174,7 @@ export default function HomePage() {
         onDateChange={handleDateChange}
         onOpenAddModal={() => setIsAddDebtModalOpen(true)}
         onResetData={handleResetData}
+        onLogout={handleLogout}
       />
 
       {/* Ana Gövde */}

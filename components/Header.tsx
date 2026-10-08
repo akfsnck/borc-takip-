@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { Plus, ShieldAlert, Calendar, RotateCcw, Sparkles } from 'lucide-react';
+import { Plus, ShieldAlert, Calendar, RotateCcw, Sparkles, LogOut } from 'lucide-react';
 import { formatDateTR } from '@/lib/calculations';
 
 interface HeaderProps {
@@ -9,6 +9,7 @@ interface HeaderProps {
   onDateChange: (newDate: string) => void;
   onOpenAddModal: () => void;
   onResetData: () => void;
+  onLogout: () => void;
 }
 
 export const Header: React.FC<HeaderProps> = ({
@@ -16,6 +17,7 @@ export const Header: React.FC<HeaderProps> = ({
   onDateChange,
   onOpenAddModal,
   onResetData,
+  onLogout,
 }) => {
   return (
     <header className="sticky top-0 z-40 bg-[#090d16]/90 backdrop-blur-md border-b border-slate-800/80 px-4 py-3">
@@ -60,10 +62,20 @@ export const Header: React.FC<HeaderProps> = ({
 
           <button
             onClick={onOpenAddModal}
-            className="flex items-center gap-1.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-medium px-3.5 py-2 rounded-xl text-xs sm:text-sm shadow-md shadow-emerald-600/20 active:scale-95 transition-all"
+            className="flex items-center gap-1.5 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-medium px-3 py-2 rounded-xl text-xs sm:text-sm shadow-md shadow-emerald-600/20 active:scale-95 transition-all"
           >
             <Plus className="w-4 h-4 stroke-[2.5]" />
-            <span>Yeni Borç</span>
+            <span className="hidden sm:inline">Yeni Borç</span>
+            <span className="sm:hidden">Ekle</span>
+          </button>
+
+          <button
+            onClick={onLogout}
+            title="Güvenli Çıkış Yap"
+            className="p-2 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 transition-colors text-xs flex items-center gap-1"
+          >
+            <LogOut className="w-4 h-4" />
+            <span className="hidden sm:inline">Çıkış</span>
           </button>
         </div>
       </div>
