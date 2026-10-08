@@ -3,6 +3,7 @@
 import React from 'react';
 import { CalculatedDebtStatus } from '@/lib/types';
 import { formatCurrency, formatDateTR } from '@/lib/calculations';
+import { getBankTheme } from '@/lib/bankColors';
 import { AlertCircle, Clock, Calendar, Banknote, ShieldAlert, CheckCircle2 } from 'lucide-react';
 
 interface UrgentPaymentsProps {
@@ -54,6 +55,7 @@ export const UrgentPayments: React.FC<UrgentPaymentsProps> = ({
       <div className="grid grid-cols-1 md:grid-cols-2 gap-2.5">
         {sorted.map((item) => {
           const { debt, statusBadge, riskColor, daysUntilDue, isOverdue, overdueDays } = item;
+          const bankTheme = getBankTheme(debt.bank);
 
           const isRed = riskColor === 'red';
           const isOrange = riskColor === 'orange';
@@ -61,7 +63,7 @@ export const UrgentPayments: React.FC<UrgentPaymentsProps> = ({
           return (
             <div
               key={debt.id}
-              className={`rounded-2xl p-4 border transition-all flex flex-col justify-between ${
+              className={`rounded-2xl p-4 border transition-all flex flex-col justify-between relative overflow-hidden ${
                 isRed
                   ? 'bg-gradient-to-br from-rose-950/30 to-slate-900 border-rose-500/40 shadow-lg shadow-rose-950/20'
                   : isOrange
@@ -69,12 +71,22 @@ export const UrgentPayments: React.FC<UrgentPaymentsProps> = ({
                   : 'bg-slate-900/90 border-slate-800'
               }`}
             >
-              <div>
+              {/* Banka Üst İnce Şeridi */}
+              <div
+                className="absolute top-0 left-0 right-0 h-1"
+                style={{
+                  background: `linear-gradient(90deg, ${bankTheme.primary}, ${bankTheme.secondary})`,
+                }}
+              />
+
+              <div className="pt-0.5">
                 {/* Banka & Durum Rozeti */}
                 <div className="flex items-start justify-between gap-2 mb-2">
                   <div>
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-[11px] font-semibold text-slate-400 uppercase">
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      <span
+                        className={`text-[10px] font-bold px-1.5 py-0.5 rounded border uppercase tracking-wider ${bankTheme.badgeBg} ${bankTheme.badgeText} ${bankTheme.badgeBorder}`}
+                      >
                         {debt.bank}
                       </span>
                       {debt.last_four && (
@@ -83,7 +95,7 @@ export const UrgentPayments: React.FC<UrgentPaymentsProps> = ({
                         </span>
                       )}
                     </div>
-                    <h4 className="text-sm font-bold text-white tracking-tight mt-0.5">
+                    <h4 className="text-sm font-bold text-white tracking-tight mt-1">
                       {debt.name}
                     </h4>
                   </div>

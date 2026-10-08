@@ -3,6 +3,7 @@
 import React from 'react';
 import { CalculatedDebtStatus } from '@/lib/types';
 import { formatCurrency, formatDateTR, formatPercent } from '@/lib/calculations';
+import { getBankTheme } from '@/lib/bankColors';
 import { AlertCircle, Calendar, CreditCard, Landmark, CheckCircle2, ChevronRight, Banknote, ShieldAlert } from 'lucide-react';
 
 interface DebtCardProps {
@@ -50,22 +51,46 @@ export const DebtCard: React.FC<DebtCardProps> = ({
 
   const isTaksitli = debt.total_installments && debt.total_installments > 0;
   const isKMH = debt.type === 'overdraft';
+  const bankTheme = getBankTheme(debt.bank);
 
   return (
     <div className={`rounded-2xl border p-4.5 transition-all shadow-lg hover:shadow-xl relative overflow-hidden ${getBorderColor()}`}>
+      {/* Banka Özel Renkli Üst Çizgi (Accent Stripe) */}
+      <div
+        className="absolute top-0 left-0 right-0 h-1.5"
+        style={{
+          background: `linear-gradient(90deg, ${bankTheme.primary}, ${bankTheme.secondary || bankTheme.primary})`,
+        }}
+      />
+
+      {/* Arka plan köşe ışıltısı */}
+      <div
+        className="absolute -top-10 -right-10 w-28 h-28 rounded-full blur-2xl pointer-events-none opacity-40"
+        style={{ background: bankTheme.glowColor }}
+      />
+
       {/* Üst Kısım: Banka, Ürün ve Rozet */}
-      <div className="flex items-start justify-between gap-3 mb-3">
+      <div className="flex items-start justify-between gap-3 mb-3 pt-1">
         <div className="flex items-center gap-2.5">
-          <div className="p-2.5 rounded-xl bg-slate-800/80 border border-slate-700/60 text-slate-300">
+          {/* Banka Özel Renkli İkon Kutusu */}
+          <div
+            className="p-2.5 rounded-xl border flex items-center justify-center text-white shadow-md shrink-0"
+            style={{
+              background: `linear-gradient(135deg, ${bankTheme.primary}, ${bankTheme.secondary})`,
+              borderColor: 'rgba(255, 255, 255, 0.15)',
+            }}
+          >
             {isKMH ? (
-              <Landmark className="w-5 h-5 text-indigo-400" />
+              <Landmark className="w-5 h-5 text-white" />
             ) : (
-              <CreditCard className="w-5 h-5 text-teal-400" />
+              <CreditCard className="w-5 h-5 text-white" />
             )}
           </div>
           <div>
-            <div className="flex items-center gap-1.5">
-              <span className="text-xs font-semibold text-slate-400 uppercase tracking-wide">
+            <div className="flex items-center gap-1.5 flex-wrap">
+              <span
+                className={`text-[11px] font-bold px-2 py-0.5 rounded-md border uppercase tracking-wider ${bankTheme.badgeBg} ${bankTheme.badgeText} ${bankTheme.badgeBorder}`}
+              >
                 {debt.bank}
               </span>
               {debt.last_four && (
@@ -74,7 +99,7 @@ export const DebtCard: React.FC<DebtCardProps> = ({
                 </span>
               )}
             </div>
-            <h3 className="text-sm sm:text-base font-bold text-white tracking-tight mt-0.5">
+            <h3 className="text-sm sm:text-base font-bold text-white tracking-tight mt-1">
               {debt.name}
             </h3>
           </div>

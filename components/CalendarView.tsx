@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { CalculatedDebtStatus } from '@/lib/types';
 import { formatCurrency, formatDateTR } from '@/lib/calculations';
+import { getBankTheme } from '@/lib/bankColors';
 import { CalendarDays, ChevronLeft, ChevronRight, Banknote, Calendar as CalendarIcon, CheckCircle2 } from 'lucide-react';
 
 interface CalendarViewProps {
@@ -237,32 +238,50 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
 
       {/* Ödeme Kalemleri Listesi */}
       <div className="space-y-2.5">
-        {currentItems.map((item) => (
-          <div
-            key={item.id}
-            className={`rounded-2xl p-4 border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3 ${
-              item.isOverdue
-                ? 'bg-rose-950/30 border-rose-500/40'
-                : 'bg-slate-900/80 border-slate-800 hover:border-slate-700'
-            }`}
-          >
-            <div className="flex items-start gap-3">
-              <div className="p-2.5 rounded-xl bg-slate-800 border border-slate-700 text-slate-300 shrink-0">
-                <CalendarIcon className="w-5 h-5 text-emerald-400" />
-              </div>
-              <div>
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-semibold text-slate-400 uppercase">
-                    {item.bank}
-                  </span>
-                  <span className="text-[10px] text-slate-400 px-1.5 py-0.2 bg-slate-800 rounded">
-                    {item.type}
-                  </span>
+        {currentItems.map((item) => {
+          const bankTheme = getBankTheme(item.bank);
+          return (
+            <div
+              key={item.id}
+              className={`rounded-2xl p-4 border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3 relative overflow-hidden ${
+                item.isOverdue
+                  ? 'bg-rose-950/30 border-rose-500/40'
+                  : 'bg-slate-900/80 border-slate-800 hover:border-slate-700'
+              }`}
+            >
+              {/* Banka Rengi Üst İnce Şerit */}
+              <div
+                className="absolute top-0 left-0 right-0 h-1"
+                style={{
+                  background: `linear-gradient(90deg, ${bankTheme.primary}, ${bankTheme.secondary})`,
+                }}
+              />
+
+              <div className="flex items-start gap-3 pt-0.5">
+                <div
+                  className="p-2.5 rounded-xl border flex items-center justify-center text-white shrink-0 shadow-md"
+                  style={{
+                    background: `linear-gradient(135deg, ${bankTheme.primary}, ${bankTheme.secondary})`,
+                    borderColor: 'rgba(255, 255, 255, 0.15)',
+                  }}
+                >
+                  <CalendarIcon className="w-5 h-5 text-white" />
                 </div>
-                <h4 className="text-sm font-bold text-white mt-0.5">
-                  {item.title}
-                </h4>
-                <div className="flex items-center gap-2 mt-1 text-xs text-slate-400">
+                <div>
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span
+                      className={`text-[10px] font-bold px-2 py-0.5 rounded border uppercase tracking-wider ${bankTheme.badgeBg} ${bankTheme.badgeText} ${bankTheme.badgeBorder}`}
+                    >
+                      {item.bank}
+                    </span>
+                    <span className="text-[10px] text-slate-400 px-1.5 py-0.2 bg-slate-800 rounded">
+                      {item.type}
+                    </span>
+                  </div>
+                  <h4 className="text-sm font-bold text-white mt-1">
+                    {item.title}
+                  </h4>
+                  <div className="flex items-center gap-2 mt-1 text-xs text-slate-400">
                   <span className="font-semibold text-slate-300">Vade: {item.date}</span>
                 </div>
               </div>
@@ -287,7 +306,8 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
               )}
             </div>
           </div>
-        ))}
+        );
+      })}
       </div>
     </div>
   );
