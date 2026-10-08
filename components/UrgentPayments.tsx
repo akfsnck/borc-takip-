@@ -37,17 +37,17 @@ export const UrgentPayments: React.FC<UrgentPaymentsProps> = ({
     <div className="space-y-3">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <div className="p-1.5 rounded-lg bg-rose-500/10 text-rose-400 border border-rose-500/20">
+          <div className="p-1.5 rounded-lg bg-rose-500/10 text-rose-600 dark:text-rose-400 border border-rose-500/20">
             <Clock className="w-4 h-4" />
           </div>
           <div>
-            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-300">
+            <h3 className="text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-300">
               ACİL ÖDEMELER
             </h3>
             <p className="text-[11px] text-slate-500">Ödeme Vadesine Göre Sıralı</p>
           </div>
         </div>
-        <span className="text-xs text-slate-400">
+        <span className="text-xs text-slate-500 dark:text-slate-400">
           {sorted.length} Kalem
         </span>
       </div>
@@ -63,12 +63,12 @@ export const UrgentPayments: React.FC<UrgentPaymentsProps> = ({
           return (
             <div
               key={debt.id}
-              className={`rounded-2xl p-4 border transition-all flex flex-col justify-between relative overflow-hidden ${
+              className={`rounded-2xl p-4 border transition-all flex flex-col justify-between relative overflow-hidden shadow-xs ${
                 isRed
-                  ? 'bg-gradient-to-br from-rose-950/30 to-slate-900 border-rose-500/40 shadow-lg shadow-rose-950/20'
+                  ? 'bg-rose-50/70 dark:bg-gradient-to-br dark:from-rose-950/30 dark:to-slate-900 border-rose-200 dark:border-rose-500/40 shadow-rose-500/5'
                   : isOrange
-                  ? 'bg-gradient-to-br from-amber-950/20 to-slate-900 border-amber-500/30'
-                  : 'bg-slate-900/90 border-slate-800'
+                  ? 'bg-amber-50/70 dark:bg-gradient-to-br dark:from-amber-950/20 dark:to-slate-900 border-amber-200 dark:border-amber-500/30'
+                  : 'bg-white dark:bg-slate-900/90 border-slate-200/90 dark:border-slate-800'
               }`}
             >
               {/* Banka Üst İnce Şeridi */}
@@ -90,12 +90,12 @@ export const UrgentPayments: React.FC<UrgentPaymentsProps> = ({
                         {debt.bank}
                       </span>
                       {debt.last_four && (
-                        <span className="text-[10px] text-slate-400 font-mono bg-slate-800 px-1 py-0.2 rounded border border-slate-700">
+                        <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono bg-slate-100 dark:bg-slate-800 px-1 py-0.2 rounded border border-slate-200 dark:border-slate-700">
                           •••• {debt.last_four}
                         </span>
                       )}
                     </div>
-                    <h4 className="text-sm font-bold text-white tracking-tight mt-1">
+                    <h4 className="text-sm font-bold text-slate-900 dark:text-white tracking-tight mt-1">
                       {debt.name}
                     </h4>
                   </div>
@@ -104,30 +104,30 @@ export const UrgentPayments: React.FC<UrgentPaymentsProps> = ({
                   <div className="text-right">
                     <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full border inline-flex items-center gap-1 ${
                       isRed
-                        ? 'bg-rose-500/20 text-rose-300 border-rose-500/40'
+                        ? 'bg-rose-100 text-rose-700 border-rose-300 dark:bg-rose-500/20 dark:text-rose-300 dark:border-rose-500/40'
                         : isOrange
-                        ? 'bg-amber-500/20 text-amber-300 border-amber-500/40'
-                        : 'bg-slate-800 text-slate-300 border-slate-700'
+                        ? 'bg-amber-100 text-amber-700 border-amber-300 dark:bg-amber-500/20 dark:text-amber-300 dark:border-amber-500/40'
+                        : 'bg-slate-100 text-slate-700 border-slate-300 dark:bg-slate-800 dark:text-slate-300 dark:border-slate-700'
                     }`}>
-                      {isOverdue && <ShieldAlert className="w-3 h-3 text-rose-400" />}
+                      {isOverdue && <ShieldAlert className="w-3 h-3 text-rose-500 dark:text-rose-400" />}
                       {statusBadge.text}
                     </span>
                   </div>
                 </div>
 
                 {/* Tutarlar & Vade */}
-                <div className="grid grid-cols-2 gap-2 py-2 border-y border-slate-800/80 text-xs my-2">
+                <div className="grid grid-cols-2 gap-2 py-2 border-y border-slate-100 dark:border-slate-800/80 text-xs my-2">
                   <div>
-                    <span className="text-slate-400 block text-[11px]">Kalan Ekstre:</span>
-                    <span className="text-sm font-bold text-white">
+                    <span className="text-slate-500 dark:text-slate-400 block text-[11px]">Kalan Ekstre:</span>
+                    <span className="text-sm font-bold text-slate-900 dark:text-white">
                       {formatCurrency(item.remainingStatementBalance)}
                     </span>
                   </div>
 
                   <div>
-                    <span className="text-slate-400 block text-[11px]">Kalan Asgari:</span>
+                    <span className="text-slate-500 dark:text-slate-400 block text-[11px]">Kalan Asgari:</span>
                     <span className={`text-sm font-bold ${
-                      item.remainingMinimumPayment > 0 ? 'text-amber-400' : 'text-emerald-400'
+                      item.remainingMinimumPayment > 0 ? 'text-amber-600 dark:text-amber-400' : 'text-emerald-600 dark:text-emerald-400'
                     }`}>
                       {item.remainingMinimumPayment > 0
                         ? formatCurrency(item.remainingMinimumPayment)
@@ -141,11 +141,11 @@ export const UrgentPayments: React.FC<UrgentPaymentsProps> = ({
               <div className="flex items-center justify-between pt-2">
                 <div className="flex items-center gap-1.5 text-xs">
                   <Calendar className="w-3.5 h-3.5 text-slate-400" />
-                  <span className="text-slate-300 font-medium">
+                  <span className="text-slate-700 dark:text-slate-300 font-medium">
                     {formatDateTR(debt.due_date || debt.first_due_date)}
                   </span>
                   <span className={`font-bold ml-1 ${
-                    isOverdue ? 'text-rose-400' : daysUntilDue !== null && daysUntilDue <= 3 ? 'text-amber-400' : 'text-slate-400'
+                    isOverdue ? 'text-rose-600 dark:text-rose-400' : daysUntilDue !== null && daysUntilDue <= 3 ? 'text-amber-600 dark:text-amber-400' : 'text-slate-500 dark:text-slate-400'
                   }`}>
                     ({isOverdue ? `${overdueDays} gün gecikti` : daysUntilDue === 0 ? 'Bugün' : `${daysUntilDue} gün kaldı`})
                   </span>

@@ -64,22 +64,22 @@ export const AddDebtModal: React.FC<AddDebtModalProps> = ({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm animate-in fade-in">
-      <div className="w-full max-w-lg rounded-2xl bg-slate-900 border border-slate-800 shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm animate-in fade-in">
+      <div className="w-full max-w-lg rounded-2xl bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 shadow-2xl overflow-hidden flex flex-col max-h-[92vh]">
         {/* Başlık */}
-        <div className="flex items-center justify-between p-4 border-b border-slate-800 bg-slate-950/60">
+        <div className="flex items-center justify-between p-4 border-b border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950/60">
           <div className="flex items-center gap-2">
-            <div className="p-2 rounded-xl bg-emerald-500/20 text-emerald-400">
+            <div className="p-2 rounded-xl bg-emerald-500/15 text-emerald-600 dark:text-emerald-400">
               <Plus className="w-5 h-5" />
             </div>
             <div>
-              <h3 className="text-base font-bold text-white">Yeni Borç / Hesap Ekle</h3>
-              <p className="text-xs text-slate-400">Kart, KMH, kredi veya yapılandırma kaydet</p>
+              <h3 className="text-base font-bold text-slate-900 dark:text-white">Yeni Borç / Hesap Ekle</h3>
+              <p className="text-xs text-slate-500 dark:text-slate-400">Kart, KMH, kredi veya yapılandırma kaydet</p>
             </div>
           </div>
           <button
             onClick={onClose}
-            className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+            className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
           >
             <X className="w-5 h-5" />
           </button>
@@ -89,11 +89,11 @@ export const AddDebtModal: React.FC<AddDebtModalProps> = ({
         <form onSubmit={handleSubmit} className="p-4 sm:p-5 space-y-3.5 overflow-y-auto">
           {/* Tür Seçimi */}
           <div>
-            <label className="text-xs font-semibold text-slate-300 block mb-1">Borç Türü:</label>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">Borç Türü:</label>
             <select
               value={type}
               onChange={(e) => setType(e.target.value as DebtType)}
-              className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs font-medium text-slate-200 focus:outline-none focus:border-emerald-500"
+              className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs font-medium text-slate-900 dark:text-slate-200 focus:outline-none focus:border-emerald-500"
             >
               <option value="credit_card">Kredi Kartı</option>
               <option value="credit_card_installment">Taksitli Kart Borcu</option>
@@ -108,25 +108,25 @@ export const AddDebtModal: React.FC<AddDebtModalProps> = ({
           {/* Banka ve Borç Adı */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             <div>
-              <label className="text-xs font-semibold text-slate-300 block mb-1">Banka Adı: *</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">Banka Adı: *</label>
               <input
                 type="text"
                 placeholder="Örn: Yapı Kredi, Akbank, Garanti"
                 value={bank}
                 onChange={(e) => setBank(e.target.value)}
                 required
-                className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500"
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-emerald-500"
               />
             </div>
             <div>
-              <label className="text-xs font-semibold text-slate-300 block mb-1">Borç / Hesap Adı: *</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">Borç / Hesap Adı: *</label>
               <input
                 type="text"
                 placeholder="Örn: Worldcard, Esnek Hesap"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500"
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-emerald-500"
               />
             </div>
           </div>
@@ -134,8 +134,8 @@ export const AddDebtModal: React.FC<AddDebtModalProps> = ({
           {/* Son 4 Hane & Limit */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             <div>
-              <label className="text-xs font-semibold text-slate-300 block mb-1">
-                Kartın Son 4 Hanesi: <span className="text-slate-500">(Güvenlik için sadece 4 hane)</span>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">
+                Kartın Son 4 Hanesi: <span className="text-slate-400 text-[11px]">(Güvenlik için sadece 4 hane)</span>
               </label>
               <input
                 type="text"
@@ -143,18 +143,18 @@ export const AddDebtModal: React.FC<AddDebtModalProps> = ({
                 placeholder="Örn: 6734"
                 value={lastFour}
                 onChange={(e) => setLastFour(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500"
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-emerald-500"
               />
             </div>
             <div>
-              <label className="text-xs font-semibold text-slate-300 block mb-1">Toplam Limit (TL):</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">Toplam Limit (TL):</label>
               <input
                 type="number"
                 step="0.01"
                 placeholder="Örn: 43800"
                 value={creditLimit}
                 onChange={(e) => setCreditLimit(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500"
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-emerald-500"
               />
             </div>
           </div>
@@ -162,25 +162,25 @@ export const AddDebtModal: React.FC<AddDebtModalProps> = ({
           {/* Güncel Borç & Ekstre Borcu */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             <div>
-              <label className="text-xs font-semibold text-slate-300 block mb-1">Güncel Borç (TL):</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">Güncel Borç (TL):</label>
               <input
                 type="number"
                 step="0.01"
                 placeholder="Örn: 42192.85"
                 value={currentBalance}
                 onChange={(e) => setCurrentBalance(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500"
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-emerald-500"
               />
             </div>
             <div>
-              <label className="text-xs font-semibold text-slate-300 block mb-1">Son Ekstre Borcu (TL):</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">Son Ekstre Borcu (TL):</label>
               <input
                 type="number"
                 step="0.01"
                 placeholder="Örn: 41776.18"
                 value={statementBalance}
                 onChange={(e) => setStatementBalance(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500"
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-emerald-500"
               />
             </div>
           </div>
@@ -188,71 +188,71 @@ export const AddDebtModal: React.FC<AddDebtModalProps> = ({
           {/* Asgari Ödeme & Son Ödeme Tarihi */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
             <div>
-              <label className="text-xs font-semibold text-slate-300 block mb-1">Asgari Ödeme (TL):</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">Asgari Ödeme (TL):</label>
               <input
                 type="number"
                 step="0.01"
                 placeholder="Örn: 8355.24"
                 value={minimumPayment}
                 onChange={(e) => setMinimumPayment(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500"
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-emerald-500"
               />
             </div>
             <div>
-              <label className="text-xs font-semibold text-slate-300 block mb-1">Son Ödeme Tarihi:</label>
+              <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">Son Ödeme Tarihi:</label>
               <input
                 type="date"
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
-                className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500"
+                className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-slate-200 focus:outline-none focus:border-emerald-500"
               />
             </div>
           </div>
 
           {/* Taksit Bilgileri (Taksitliyse) */}
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 bg-slate-950/60 p-2.5 rounded-xl border border-slate-800">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-2.5 bg-slate-50 dark:bg-slate-950/60 p-2.5 rounded-xl border border-slate-200 dark:border-slate-800">
             <div>
-              <label className="text-[11px] font-semibold text-slate-400 block mb-1">Aylık Taksit (TL):</label>
+              <label className="text-[11px] font-semibold text-slate-600 dark:text-slate-400 block mb-1">Aylık Taksit (TL):</label>
               <input
                 type="number"
                 step="0.01"
                 placeholder="Örn: 4843.03"
                 value={monthlyInstallment}
                 onChange={(e) => setMonthlyInstallment(e.target.value)}
-                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-200"
+                className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 dark:text-slate-200"
               />
             </div>
             <div>
-              <label className="text-[11px] font-semibold text-slate-400 block mb-1">Toplam Taksit:</label>
+              <label className="text-[11px] font-semibold text-slate-600 dark:text-slate-400 block mb-1">Toplam Taksit:</label>
               <input
                 type="number"
                 placeholder="Örn: 49"
                 value={totalInstallments}
                 onChange={(e) => setTotalInstallments(e.target.value)}
-                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-200"
+                className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 dark:text-slate-200"
               />
             </div>
             <div>
-              <label className="text-[11px] font-semibold text-slate-400 block mb-1">Ödenmiş Taksit:</label>
+              <label className="text-[11px] font-semibold text-slate-600 dark:text-slate-400 block mb-1">Ödenmiş Taksit:</label>
               <input
                 type="number"
                 placeholder="Örn: 2"
                 value={paidInstallments}
                 onChange={(e) => setPaidInstallments(e.target.value)}
-                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-200"
+                className="w-full bg-white dark:bg-slate-900 border border-slate-300 dark:border-slate-700 rounded-lg px-2.5 py-1.5 text-xs text-slate-900 dark:text-slate-200"
               />
             </div>
           </div>
 
           {/* Not */}
           <div>
-            <label className="text-xs font-semibold text-slate-300 block mb-1">Not / Hatırlatma:</label>
+            <label className="text-xs font-semibold text-slate-700 dark:text-slate-300 block mb-1">Not / Hatırlatma:</label>
             <input
               type="text"
               placeholder="Örn: Otomatik ödeme talimatı yok"
               value={note}
               onChange={(e) => setNote(e.target.value)}
-              className="w-full bg-slate-950 border border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-200 focus:outline-none focus:border-emerald-500"
+              className="w-full bg-slate-50 dark:bg-slate-950 border border-slate-300 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-slate-200 placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-emerald-500"
             />
           </div>
 
@@ -261,7 +261,7 @@ export const AddDebtModal: React.FC<AddDebtModalProps> = ({
             <button
               type="button"
               onClick={onClose}
-              className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+              className="px-4 py-2 rounded-xl text-xs font-semibold text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors"
             >
               İptal
             </button>

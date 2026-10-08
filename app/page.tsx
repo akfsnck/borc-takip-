@@ -39,8 +39,20 @@ export default function HomePage() {
 
   const [isAddDebtModalOpen, setIsAddDebtModalOpen] = useState<boolean>(false);
 
+  // Tema Durumu (Varsayılan Açık Beyaz Tema)
+  const [theme, setTheme] = useState<'light' | 'dark'>('light');
+
   // Veri yükleme & Oturum kontrolü
   useEffect(() => {
+    // Tema yükle
+    const savedTheme = (localStorage.getItem('borc_takip_theme') as 'light' | 'dark') || 'light';
+    setTheme(savedTheme);
+    if (savedTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+
     const auth = localStorage.getItem('borc_takip_auth_token') || sessionStorage.getItem('borc_takip_auth_token');
     if (auth === 'session_active_mustafa') {
       setIsAuthenticated(true);
@@ -57,6 +69,17 @@ export default function HomePage() {
     }
     setIsLoaded(true);
   }, []);
+
+  const toggleTheme = () => {
+    const nextTheme = theme === 'dark' ? 'light' : 'dark';
+    setTheme(nextTheme);
+    localStorage.setItem('borc_takip_theme', nextTheme);
+    if (nextTheme === 'dark') {
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+    }
+  };
 
   const handleLogout = () => {
     localStorage.removeItem('borc_takip_auth_token');
@@ -167,7 +190,7 @@ export default function HomePage() {
   }
 
   return (
-    <div className="min-h-screen flex flex-col bg-[#090d16] text-slate-100">
+    <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-[#090d16] text-slate-900 dark:text-slate-100 transition-colors duration-200">
       {/* Üst Menü / Header */}
       <Header
         currentDate={currentDate}
@@ -175,6 +198,8 @@ export default function HomePage() {
         onOpenAddModal={() => setIsAddDebtModalOpen(true)}
         onResetData={handleResetData}
         onLogout={handleLogout}
+        theme={theme}
+        onToggleTheme={toggleTheme}
       />
 
       {/* Ana Gövde */}
@@ -209,7 +234,7 @@ export default function HomePage() {
         {currentTab === 'debts' && (
           <div className="space-y-4 animate-in fade-in">
             {/* Arama & Filtre Çubuğu */}
-            <div className="bg-slate-900/80 p-3.5 rounded-2xl border border-slate-800 space-y-3">
+            <div className="bg-white dark:bg-slate-900/80 p-3.5 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-xs space-y-3">
               <div className="relative">
                 <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-3" />
                 <input
@@ -217,7 +242,7 @@ export default function HomePage() {
                   placeholder="Banka, kart adı veya son 4 hane ara..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full bg-slate-950 border border-slate-700/80 rounded-xl pl-9 pr-4 py-2 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-emerald-500"
+                  className="w-full bg-slate-100 dark:bg-slate-950 border border-slate-200 dark:border-slate-700/80 rounded-xl pl-9 pr-4 py-2 text-xs text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-emerald-500"
                 />
               </div>
 
@@ -237,8 +262,8 @@ export default function HomePage() {
                     onClick={() => setFilterType(f.id)}
                     className={`px-3 py-1.5 rounded-xl whitespace-nowrap font-medium transition-all ${
                       filterType === f.id
-                        ? 'bg-emerald-500 text-white font-bold shadow-md shadow-emerald-500/20'
-                        : 'bg-slate-800/80 text-slate-400 hover:text-white border border-slate-700/60'
+                        ? 'bg-emerald-600 text-white font-bold shadow-md shadow-emerald-500/20'
+                        : 'bg-slate-100 dark:bg-slate-800/80 text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white border border-slate-200 dark:border-slate-700/60'
                     }`}
                   >
                     {f.label}
@@ -250,7 +275,7 @@ export default function HomePage() {
             {/* Borç Kartları Listesi */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
               {filteredDebts.length === 0 ? (
-                <div className="col-span-full py-12 text-center text-slate-500 text-xs">
+                <div className="col-span-full py-12 text-center text-slate-400 dark:text-slate-500 text-xs">
                   Arama kriterlerine uygun borç bulunamadı.
                 </div>
               ) : (
@@ -280,10 +305,10 @@ export default function HomePage() {
         {/* ======================= TAB 4: ÖDEME GEÇMİŞİ ======================= */}
         {currentTab === 'payments' && (
           <div className="space-y-4 animate-in fade-in">
-            <div className="bg-slate-900/80 p-4 rounded-2xl border border-slate-800 flex items-center justify-between">
+            <div className="bg-white dark:bg-slate-900/80 p-4 rounded-2xl border border-slate-200/90 dark:border-slate-800 shadow-xs flex items-center justify-between">
               <div>
-                <h2 className="text-base font-bold text-white">ÖDEME GEÇMİŞİ VE KAYITLARI</h2>
-                <p className="text-xs text-slate-400">Yapılan tüm tam ve kısmi (ara) ödemelerin dökümü</p>
+                <h2 className="text-base font-bold text-slate-900 dark:text-white">ÖDEME GEÇMİŞİ VE KAYITLARI</h2>
+                <p className="text-xs text-slate-500 dark:text-slate-400">Yapılan tüm tam ve kısmi (ara) ödemelerin dökümü</p>
               </div>
               <button
                 onClick={() => {
@@ -296,8 +321,8 @@ export default function HomePage() {
             </div>
 
             {payments.length === 0 ? (
-              <div className="bg-slate-900/40 border border-slate-800 rounded-2xl p-8 text-center text-slate-400 text-xs">
-                <CheckCircle className="w-8 h-8 text-slate-600 mx-auto mb-2" />
+              <div className="bg-white dark:bg-slate-900/40 border border-slate-200/80 dark:border-slate-800 rounded-2xl p-8 text-center text-slate-500 dark:text-slate-400 text-xs shadow-xs">
+                <CheckCircle className="w-8 h-8 text-slate-400 dark:text-slate-600 mx-auto mb-2" />
                 Henüz kayıtlı bir ödeme bulunmuyor. Bir borç kartındaki "Ödeme Yap" butonuna basarak kısmi veya tam ödeme kaydedebilirsiniz.
               </div>
             ) : (
@@ -307,26 +332,26 @@ export default function HomePage() {
                   return (
                     <div
                       key={p.id}
-                      className="p-3.5 bg-slate-900/80 border border-slate-800 rounded-xl flex items-center justify-between gap-3 text-xs"
+                      className="p-3.5 bg-white dark:bg-slate-900/80 border border-slate-200/80 dark:border-slate-800 rounded-xl flex items-center justify-between gap-3 text-xs shadow-xs"
                     >
                       <div>
-                        <span className="font-bold text-white block">
+                        <span className="font-bold text-slate-900 dark:text-white block">
                           {debt ? `${debt.bank} - ${debt.name}` : 'Bilinmeyen Borç'}
                         </span>
-                        <div className="flex items-center gap-2 text-slate-400 text-[11px] mt-0.5">
+                        <div className="flex items-center gap-2 text-slate-500 dark:text-slate-400 text-[11px] mt-0.5">
                           <span>{p.payment_date}</span>
                           <span>•</span>
-                          <span className="text-emerald-400 font-medium">{p.payment_type}</span>
+                          <span className="text-emerald-600 dark:text-emerald-400 font-medium">{p.payment_type}</span>
                         </div>
-                        {p.note && <p className="text-slate-400 italic text-[11px] mt-1">"{p.note}"</p>}
+                        {p.note && <p className="text-slate-500 dark:text-slate-400 italic text-[11px] mt-1">"{p.note}"</p>}
                       </div>
                       <div className="flex items-center gap-3">
-                        <span className="text-sm font-bold text-emerald-400">
+                        <span className="text-sm font-bold text-emerald-600 dark:text-emerald-400">
                           {p.amount.toLocaleString('tr-TR')} TL
                         </span>
                         <button
                           onClick={() => handleDeletePayment(p.id)}
-                          className="text-slate-500 hover:text-rose-400"
+                          className="text-slate-400 hover:text-rose-500 dark:text-slate-500 dark:hover:text-rose-400"
                         >
                           ✕
                         </button>

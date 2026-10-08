@@ -173,27 +173,27 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
   return (
     <div className="space-y-4">
       {/* Ay Seçici & Başlık */}
-      <div className="bg-slate-900/90 rounded-2xl p-4 sm:p-5 border border-slate-800 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      <div className="bg-white dark:bg-slate-900/90 rounded-2xl p-4 sm:p-5 border border-slate-200/90 dark:border-slate-800 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2">
-            <CalendarDays className="w-5 h-5 text-emerald-400" />
-            <h2 className="text-base font-bold text-white tracking-tight">
+            <CalendarDays className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
+            <h2 className="text-base font-bold text-slate-900 dark:text-white tracking-tight">
               ÖDEME PLANI VE VADE TAKVİMİ
             </h2>
           </div>
-          <p className="text-xs text-slate-400 mt-0.5">
+          <p className="text-xs text-slate-500 dark:text-slate-400 mt-0.5">
             Gelecek ayların taksit ve ekstre projeksiyonu
           </p>
         </div>
 
         {/* Ay Butonları */}
-        <div className="flex items-center bg-slate-950 p-1 rounded-xl border border-slate-800 self-start sm:self-auto">
+        <div className="flex items-center bg-slate-100 dark:bg-slate-950 p-1 rounded-xl border border-slate-200 dark:border-slate-800 self-start sm:self-auto">
           <button
             onClick={() => setSelectedMonth('2026-10')}
             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
               selectedMonth === '2026-10'
-                ? 'bg-emerald-500 text-white shadow-md'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-emerald-600 text-white shadow-md'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             Ekim 2026
@@ -202,8 +202,8 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
             onClick={() => setSelectedMonth('2026-11')}
             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
               selectedMonth === '2026-11'
-                ? 'bg-emerald-500 text-white shadow-md'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-emerald-600 text-white shadow-md'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             Kasım 2026
@@ -212,8 +212,8 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
             onClick={() => setSelectedMonth('2026-12')}
             className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
               selectedMonth === '2026-12'
-                ? 'bg-emerald-500 text-white shadow-md'
-                : 'text-slate-400 hover:text-white'
+                ? 'bg-emerald-600 text-white shadow-md'
+                : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
             }`}
           >
             Aralık 2026
@@ -222,16 +222,16 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
       </div>
 
       {/* Seçili Ayın Toplam Ödeme Yükü */}
-      <div className="bg-gradient-to-r from-emerald-950/40 via-slate-900 to-slate-950 p-4 rounded-2xl border border-emerald-500/20 flex items-center justify-between">
+      <div className="bg-gradient-to-r from-emerald-50 via-white to-slate-50 dark:from-emerald-950/40 dark:via-slate-900 dark:to-slate-950 p-4 rounded-2xl border border-emerald-200 dark:border-emerald-500/20 shadow-xs flex items-center justify-between">
         <div>
-          <span className="text-xs font-semibold text-emerald-400 uppercase tracking-wider block">
+          <span className="text-xs font-semibold text-emerald-700 dark:text-emerald-400 uppercase tracking-wider block">
             {monthNames[selectedMonth]} TOPLAM ÖDEME YÜKÜ
           </span>
-          <span className="text-xl sm:text-2xl font-black text-white mt-0.5 block">
+          <span className="text-xl sm:text-2xl font-black text-slate-900 dark:text-white mt-0.5 block">
             {formatCurrency(monthTotal)}
           </span>
         </div>
-        <span className="text-xs text-slate-400 bg-slate-800/80 px-3 py-1.5 rounded-xl border border-slate-700/60 font-medium">
+        <span className="text-xs text-slate-600 dark:text-slate-400 bg-white dark:bg-slate-800/80 px-3 py-1.5 rounded-xl border border-slate-200 dark:border-slate-700/60 font-medium">
           {currentItems.length} Kalem Ödeme
         </span>
       </div>
@@ -243,10 +243,10 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
           return (
             <div
               key={item.id}
-              className={`rounded-2xl p-4 border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3 relative overflow-hidden ${
+              className={`rounded-2xl p-4 border transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3 relative overflow-hidden shadow-xs ${
                 item.isOverdue
-                  ? 'bg-rose-950/30 border-rose-500/40'
-                  : 'bg-slate-900/80 border-slate-800 hover:border-slate-700'
+                  ? 'bg-rose-50/70 dark:bg-rose-950/30 border-rose-200 dark:border-rose-500/40'
+                  : 'bg-white dark:bg-slate-900/80 border-slate-200/90 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700'
               }`}
             >
               {/* Banka Rengi Üst İnce Şerit */}
@@ -274,40 +274,40 @@ export const CalendarView: React.FC<CalendarViewProps> = ({
                     >
                       {item.bank}
                     </span>
-                    <span className="text-[10px] text-slate-400 px-1.5 py-0.2 bg-slate-800 rounded">
+                    <span className="text-[10px] text-slate-500 dark:text-slate-400 px-1.5 py-0.2 bg-slate-100 dark:bg-slate-800 rounded">
                       {item.type}
                     </span>
                   </div>
-                  <h4 className="text-sm font-bold text-white mt-1">
+                  <h4 className="text-sm font-bold text-slate-900 dark:text-white mt-1">
                     {item.title}
                   </h4>
-                  <div className="flex items-center gap-2 mt-1 text-xs text-slate-400">
-                  <span className="font-semibold text-slate-300">Vade: {item.date}</span>
+                  <div className="flex items-center gap-2 mt-1 text-xs text-slate-500 dark:text-slate-400">
+                    <span className="font-semibold text-slate-700 dark:text-slate-300">Vade: {item.date}</span>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className="flex items-center justify-between sm:justify-end gap-4 border-t sm:border-t-0 border-slate-800 pt-2 sm:pt-0">
-              <div className="text-left sm:text-right">
-                <span className="text-[11px] text-slate-400 block">Ödeme Tutarı</span>
-                <span className="text-base font-bold text-emerald-400">
-                  {formatCurrency(item.amount)}
-                </span>
+              <div className="flex items-center justify-between sm:justify-end gap-4 border-t sm:border-t-0 border-slate-100 dark:border-slate-800 pt-2 sm:pt-0">
+                <div className="text-left sm:text-right">
+                  <span className="text-[11px] text-slate-500 dark:text-slate-400 block">Ödeme Tutarı</span>
+                  <span className="text-base font-bold text-emerald-600 dark:text-emerald-400">
+                    {formatCurrency(item.amount)}
+                  </span>
+                </div>
+
+                {item.debtId && (
+                  <button
+                    onClick={() => onPayDebt(item.debtId)}
+                    className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-md shadow-emerald-600/20 active:scale-95 transition-all"
+                  >
+                    <Banknote className="w-3.5 h-3.5" />
+                    <span>Öde</span>
+                  </button>
+                )}
               </div>
-
-              {item.debtId && (
-                <button
-                  onClick={() => onPayDebt(item.debtId)}
-                  className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-md shadow-emerald-600/20 active:scale-95 transition-all"
-                >
-                  <Banknote className="w-3.5 h-3.5" />
-                  <span>Öde</span>
-                </button>
-              )}
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
       </div>
     </div>
   );
