@@ -40,3 +40,4 @@ npm run dev
 
 Ardından tarayıcınızda açın:
 **http://localhost:3005**
+  
